@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Game_Uss
 {
-    public class VLines
+    public class VLines:Figure
     {
-        List<Point> pList;
+        
         public VLines(int yUP, int yDown, int x, char sym)
         {
             pList = new List<Point>();

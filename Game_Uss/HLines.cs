@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Game_Uss
 {
-    public class HLines
+    public class HLines : Figure
     {
-        List<Point> pList;
         public HLines(int xLeft, int xRight, int y, char sym)
         {
             pList = new List<Point>();
