@@ -35,16 +35,19 @@ namespace Game_Uss
             {
                 x += offset;
             }
-            else if (direction == Direction.up)
+            else if (direction == Direction.Up)
             {
                 y -= offset;
             }
-            else if(direction== Direction.down)
+            else if(direction== Direction.Down)
             {
                 y += offset;
             }
         }
-
+        public bool IsHit(Point p)
+        {
+            return p.x == this.x && p.y == this.y;
+        }
         public void Draw()
         {
             Console.SetCursorPosition(x, y);
@@ -55,9 +58,9 @@ namespace Game_Uss
             sym = ' ';
             Draw();
         }
-        //public override string ToString()
-        //{
-        //    return x + "," + y + "," + sym;
-        //}
+        public override string ToString()
+        {
+            return x + "," + y + "," + sym;
+        }
     }
 }

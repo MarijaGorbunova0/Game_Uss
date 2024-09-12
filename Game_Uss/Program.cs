@@ -11,9 +11,9 @@ namespace Game_Uss
     {
         public static void Main(string[] args)
         {
-   
-            Console.SetBufferSize(800, 800);
             Console.Clear();
+            Console.SetWindowSize(80, 25);
+            
 
             //Point p1 = new Point(1, 3, '*');
             //p1.Draw();
@@ -41,13 +41,34 @@ namespace Game_Uss
             // }
 
 
-            Point p = new Point(6, 5, '*');
+            Point p = new Point(4, 5, '*');
 
-            Snake snake = new Snake(p, 4, Direction.Left);
+            Snake snake = new Snake(p, 4, Direction.Right);
             snake.Drow();
-            snake.Move();
+            Food createFood = new Food(80, 25, '$');
+            Point food = createFood.CreateFood();
+
+            while (true)
+            {
+                if (snake.Eat(food))
+                {
+                    food = createFood.CreateFood();
+                    food.Draw();
+                }
+                else
+                {
+                    snake.Move();
+                }
+                Thread.Sleep(100);
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo key = Console.ReadKey();
+                    snake.HandleKey(key.Key);
+                }
+               
+            }
             // pList.Add(p1);
-            ///  pList.Add(p2);
+            // pList.Add(p2);
         }
     }
 }

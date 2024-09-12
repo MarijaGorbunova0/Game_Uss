@@ -10,8 +10,8 @@ namespace Game_Uss
     {
         Left,
         Right,
-        up,
-        down,
+        Up,
+        Down,
     }
 
 }
