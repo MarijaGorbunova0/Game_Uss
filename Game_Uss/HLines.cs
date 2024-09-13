@@ -25,10 +25,10 @@ namespace Game_Uss
             //pList.Add(p1);
             //pList.Add(p2);
             //pList.Add(p3);
-        public void Draw()
+        public void Drow()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            base.Drow();
+            base.Draw();
         }
     }
 

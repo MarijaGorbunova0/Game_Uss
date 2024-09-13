@@ -13,21 +13,14 @@ namespace Game_Uss
         {
             Console.Clear();
             Console.SetWindowSize(80, 25);
-            
 
+            Walls walls = new Walls(80, 25);
+            walls.Draw();
             //Point p1 = new Point(1, 3, '*');
             //p1.Draw();
             //Point p2 = new Point(4, 5, '#');
             //p2.Draw();
 
-            HLines UPline = new HLines(0, 78, 0, '+');
-            HLines DownLine = new HLines(0, 78, 24, '+');
-            UPline.Drow();
-            DownLine.Drow();
-            VLines leftLine = new VLines(0, 24, 0, '+');
-            VLines rightLine = new VLines(0, 24, 78, '+');
-            leftLine.Drow();
-            rightLine.Drow();
             // List<int> numList = new List<int>();
             // numList.Add(0);
             // numList.Add(1);
@@ -43,14 +36,18 @@ namespace Game_Uss
 
             Point p = new Point(4, 5, '*');
 
-            Snake snake = new Snake(p, 4, Direction.Right);
-            snake.Drow();
+            Snake snake = new Snake(p, 4, Direction.Down);
+            snake.Draw();
             Food createFood = new Food(80, 25, '$');
             Point food = createFood.CreateFood();
             food.Draw();
 
             while (true)
             {
+                if (walls.IsHit(snake) || snake.IsHitTail())
+                {
+                    break;
+                }
                 if (snake.Eat(food))
                 {
                     food = createFood.CreateFood();
