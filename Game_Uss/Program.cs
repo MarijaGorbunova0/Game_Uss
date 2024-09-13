@@ -47,6 +47,7 @@ namespace Game_Uss
             snake.Drow();
             Food createFood = new Food(80, 25, '$');
             Point food = createFood.CreateFood();
+            food.Draw();
 
             while (true)
             {
