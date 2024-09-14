@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,11 @@ namespace Game_Uss
     public class Walls
     {
         List<Figure> wallList;
+       
         public Walls(int mapWidth, int mapHeight)
         {
             wallList= new List<Figure>();
+          
 
             HLines UPline = new HLines(0, mapWidth - 2, 0, '+');
             HLines DownLine = new HLines(0, mapWidth -2, mapHeight - 1, '+');

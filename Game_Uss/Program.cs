@@ -33,7 +33,7 @@ namespace Game_Uss
             //   Console.WriteLine(i);
             // }
 
-
+            int bal = 0; 
             Point p = new Point(4, 5, '*');
 
             Snake snake = new Snake(p, 4, Direction.Down);
@@ -44,6 +44,8 @@ namespace Game_Uss
 
             while (true)
             {
+                Console.SetCursorPosition(30, 0);
+                Console.WriteLine($"punktid: {bal}");
                 if (walls.IsHit(snake) || snake.IsHitTail())
                 {
                     break;
@@ -52,12 +54,14 @@ namespace Game_Uss
                 {
                     food = createFood.CreateFood();
                     food.Draw();
+                    bal = Levels.Counter(bal);
+
                 }
                 else
                 {
                     snake.Move();
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(Levels.Speed);
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey();

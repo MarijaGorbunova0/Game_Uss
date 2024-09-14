@@ -11,7 +11,7 @@ namespace Game_Uss
         int mapWidth;
         int mapHeight;
         char sym;
-
+       
         Random rand = new Random();
         public Food(int mapWidth, int mapHeight, char sym)
         {
