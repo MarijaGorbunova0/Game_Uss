@@ -15,7 +15,7 @@ namespace Game_Uss
             Console.SetWindowSize(80, 25);
 
             Walls walls = new Walls(80, 25);
-            walls.Draw();
+            
             //Point p1 = new Point(1, 3, '*');
             //p1.Draw();
             //Point p2 = new Point(4, 5, '#');
@@ -37,11 +37,33 @@ namespace Game_Uss
             Point p = new Point(4, 5, '*');
 
             Snake snake = new Snake(p, 4, Direction.Down);
-            snake.Draw();
+            
             Food createFood = new Food(80, 25, '$');
             Point food = createFood.CreateFood();
-            food.Draw();
 
+            Menu.PrintMenu();
+            List<Registr> userScores = new List<Registr>();
+            Registr.Players(userScores);
+            Console.SetCursorPosition(30, 15);
+            Console.WriteLine("kirutage oma nimi");
+            Console.SetCursorPosition(30, 16);
+            string name = Console.ReadLine();
+            if (userScores.Exists(user => user.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            {
+                Console.SetCursorPosition(30, 15);
+                Console.WriteLine("te olite v spiske");
+
+            }
+            else
+            {
+                Registr.RegisterUser(userScores, name);
+                Console.Clear();
+            }
+
+          
+            walls.Draw();
+            food.Draw();
+            snake.Draw();
             while (true)
             {
                 Console.SetCursorPosition(30, 0);
@@ -55,11 +77,16 @@ namespace Game_Uss
                     food = createFood.CreateFood();
                     food.Draw();
                     bal = Levels.Counter(bal);
-
+                
+                }
+                else if(bal < 1)
+                {  
+                    snake.Move();
                 }
                 else
                 {
-                    snake.Move();
+
+                    Levels.GameOver();
                 }
                 Thread.Sleep(Levels.Speed);
                 if (Console.KeyAvailable)
