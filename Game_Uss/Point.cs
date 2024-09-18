@@ -56,6 +56,13 @@ namespace Game_Uss
         
             Console.Write(sym);
         }
+        public void Draw(ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(x, y);
+            Console.Write(sym);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
         public void Clear()
         {
             sym = ' ';

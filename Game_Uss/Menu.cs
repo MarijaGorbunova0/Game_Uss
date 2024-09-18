@@ -13,9 +13,11 @@ namespace Game_Uss
             Walls walls = new Walls(80, 25);
             Console.ForegroundColor = ConsoleColor.Green;
             walls.Draw();
+            Console.SetCursorPosition(35, 5);
+            Console.WriteLine("SNAKE");
 
-            Console.ForegroundColor = ConsoleColor.Green;
         }
+
         public void Drow()
         {
             foreach (Point p in pList)

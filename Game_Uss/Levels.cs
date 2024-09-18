@@ -9,74 +9,103 @@ namespace Game_Uss
 {
     public class Levels
     {
-        public static int CurrentLevel = 1;
-        public static int Speed = 100;
-        public static int Counter(int count)
-        {
-            count++;
-            Console.SetCursorPosition(30, 0);
-            Console.WriteLine($"Очки: {count}");
+        public int CurrentLevel = 1;
+        public int Speed = 100;
+        public Walls walls;
+        public string lvlupMessage = "LEVEL UP";
+        public List<int> levelStatus;
+        public Snake snake { get; private set; }
 
-            
+        public Levels(Walls walls, Snake snake)
+        {
+            levelStatus = new List<int>() { 0, lvlupMessage.Length };
+
+            this.snake = snake;
+            this.walls = walls;
+        }
+        public void DrawLevel()
+        {
+            this.levelStatus[0] = 1;
+            Console.SetCursorPosition(walls.mapWidth + 1, 0);
+            Console.WriteLine($"Level: {CurrentLevel}");
+        }
+        public void DrawScore(int count)
+        {
+            string line = $"Punktid: {count}";
+            Console.SetCursorPosition((walls.mapWidth / 2) - line.Length / 2 - 1, 0);
+            Console.WriteLine(line);
+        }
+        public int Counter(int count)
+        {
+            if (this.levelStatus[0] == 1)
+            {
+                this.levelStatus[0] = 0;
+                Console.SetCursorPosition(walls.mapWidth + 1, 2);
+                Console.Write(string.Concat("", new string(' ', levelStatus[1])));
+            }
+            count++;
+            this.DrawScore(count);
+
             if (count % 5 == 0)
             {
+                Console.ForegroundColor = snake.currentColor;
+                Console.SetCursorPosition(walls.mapWidth + 1, 2);
+                Console.WriteLine(lvlupMessage);
+                Console.ForegroundColor = ConsoleColor.White;
                 LevelUp();
-    
             }
-
             return count;
         }
-        public static void LevelUp()
+        public void LevelUp()
         {
-            if (CurrentLevel < 3)
+            if (CurrentLevel <= 4)
             {
                 CurrentLevel++;
                 Speed -= 25;
-                Console.SetCursorPosition(0, 1);
-                Console.WriteLine($"Level: {CurrentLevel}");
+                this.DrawLevel();
                 Console.ForegroundColor = ConsoleColor.White;
                 ChangeLevelColor(CurrentLevel);
 
             }
         }
-        public static void ChangeLevelColor(int level)
+        public void ChangeLevelColor(int level)
         {
             switch (level)
             {
                 case 1:
                     Console.Clear();
-                    Console.BackgroundColor = ConsoleColor.Cyan; 
-                    Console.ForegroundColor = ConsoleColor.White;  
-                      
+                    snake.currentColor = ConsoleColor.Cyan;
                     break;
-                case 2:                     
-                    Console.ForegroundColor = ConsoleColor.Green;                    
+                case 2:
+                    snake.currentColor = ConsoleColor.Green;
                     break;
                 case 3:
-                      
-                    Console.ForegroundColor = ConsoleColor.Red;         
+                    snake.currentColor = ConsoleColor.Red;
                     break;
-                default:
-                    Console.ResetColor();  
+                case 4:
+                    snake.currentColor = ConsoleColor.Blue;
                     break;
 
+                default:
+                    Console.ResetColor();
+                    break;
             }
         }
-        public static void GameOver()
+        public void GameOver()
         {
             if (CurrentLevel == 3)
             {
-                Console.SetCursorPosition(30, 10);
-                Console.WriteLine("sa võitsid");
-                Console.SetCursorPosition(30, 11);
-                Console.WriteLine($"teie punktid: {CurrentLevel}");
+                Console.SetCursorPosition((walls.mapWidth / 2) - "Sa võitsid!".Length / 2 - 1, walls.mapHeight / 2 - 1);
+                Console.WriteLine("Sa võitsid!");
+                Console.SetCursorPosition((walls.mapWidth / 2) - $"Teie punktid: {CurrentLevel}".Length / 2 - 1, walls.mapHeight / 2);
+                Console.WriteLine($"Teie punktid: {CurrentLevel}");
             }
             else
             {
-                Console.SetCursorPosition(30, 10);
-                Console.WriteLine("sa suri");
-                Console.SetCursorPosition(30, 11);
-                Console.WriteLine($"teie punktid: {CurrentLevel}");
+                Console.SetCursorPosition((walls.mapWidth / 2) - "Sa suri!".Length / 2 - 1, walls.mapHeight / 2 - 1);
+                Console.WriteLine("Sa suri!");
+                Console.SetCursorPosition((walls.mapWidth / 2) - $"Teie punktid: {CurrentLevel}".Length / 2 - 1, walls.mapHeight / 2);
+                Console.WriteLine($"Teie punktid: {CurrentLevel}");
             }
         }     
     }

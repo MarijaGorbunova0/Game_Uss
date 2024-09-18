@@ -9,12 +9,15 @@ namespace Game_Uss
 {
     public class Walls
     {
+        public int mapWidth { get; private set; }
+        public int mapHeight { get; private set; }
         List<Figure> wallList;
        
         public Walls(int mapWidth, int mapHeight)
         {
             wallList= new List<Figure>();
-          
+            this.mapWidth = mapWidth;
+            this.mapHeight = mapHeight;
 
             HLines UPline = new HLines(0, mapWidth - 2, 0, '+');
             HLines DownLine = new HLines(0, mapWidth -2, mapHeight - 1, '+');

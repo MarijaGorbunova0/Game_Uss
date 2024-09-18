@@ -10,9 +10,11 @@ namespace Game_Uss
 {
     public class Snake:Figure
     {
+        public ConsoleColor currentColor { get; set; }
         public Direction direction;
         public Snake(Point tail, int lenght, Direction _direction )
-        { 
+        {
+            currentColor = ConsoleColor.White;
             direction = _direction;
             pList = new List<Point>();
             for (int i = 0; i < lenght; i++)
@@ -23,6 +25,7 @@ namespace Game_Uss
                 pList.Add(p);
             }
         }
+        
         public void Move()
         {
             Point tail = pList.First();
@@ -31,7 +34,7 @@ namespace Game_Uss
             pList.Add(head);
 
             tail.Clear();
-            head.Draw();
+            head.Draw(currentColor);
         }
         public Point GetNextPoint()
         {
