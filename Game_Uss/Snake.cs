@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Game_Uss.Game_Uss;
 
 namespace Game_Uss
 {
@@ -17,6 +18,7 @@ namespace Game_Uss
             currentColor = ConsoleColor.White;
             direction = _direction;
             pList = new List<Point>();
+
             for (int i = 0; i < lenght; i++)
             {
     
@@ -87,6 +89,26 @@ namespace Game_Uss
             {
                 return false;
             }
+        }
+        public bool HitBarriers(List<Barriers> barriers)
+        {
+            // Проходим по каждой точке змейки
+            foreach (var snakePoint in pList)
+            {
+                // Проходим по каждой точке барьеров
+                foreach (var barrier in barriers)
+                {
+                    foreach (var barrierPoint in barrier.pList)
+                    {
+                        // Проверяем, пересекается ли точка змейки с точкой барьера
+                        if (barrierPoint.IsHit(snakePoint))
+                        {
+                            return true;  // Если есть пересечение, возвращаем true
+                        }
+                    }
+                }
+            }
+            return false;  // Если пересечений не найдено, возвращаем false
         }
     }
 }

@@ -7,29 +7,50 @@ using System.Xml.Linq;
 
 namespace Game_Uss
 {
-    public class Barriers:Figure
-    {
-        public Barriers(int yLeft, int yRight, int x, char sym)
-        {
-            pList = new List<Point>();
-            for (int y = yLeft; y <= yRight; y++)
-            {
-                Point p = new Point(x, y, sym);
-                pList.Add(p);
-            }
-        }
+    using System;
+    using System.Collections.Generic;
 
-        //pList = new List<Point>();
-        //Point p1 = new Point(4, 4, '*');
-        //Point p2 = new Point(5, 4, '*');
-        //Point p3 = new Point(6, 4, '*');
-        //pList.Add(p1);
-        //pList.Add(p2);
-        //pList.Add(p3);
-        public void Drow()
+    namespace Game_Uss
+    {
+        public class Barriers : Snake
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            base.Draw();
+            public Barriers(Point tail, int length, Direction _direction) : base(tail, length, _direction)
+            {
+                currentColor = ConsoleColor.Green;
+            }
+
+            public void AutoMove(int height)
+            {
+                // Препятствия всегда будут двигаться вниз.
+                direction = Direction.Down;
+                Move();
+                Draw();
+                Teleportation(height);
+            }
+
+            public new void Draw()
+            {
+                Console.ForegroundColor = currentColor;
+                base.Draw();
+            }
+
+            public void Teleportation(int height)
+            {
+                Point head = pList.Last();
+
+                if (head.y >= height)
+                {
+                    head.y = 0; 
+                }
+            }
+            public void Clear()
+            {
+                foreach (var point in pList)
+                {
+                    point.Clear();  
+                }
+                pList.Clear();  
+            }
         }
     }
 }

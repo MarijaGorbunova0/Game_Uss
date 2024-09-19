@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Game_Uss.Game_Uss;
 
 namespace Game_Uss
 {
@@ -66,6 +68,7 @@ namespace Game_Uss
                 Console.ForegroundColor = ConsoleColor.White;
                 ChangeLevelColor(CurrentLevel);
 
+
             }
         }
         public void ChangeLevelColor(int level)
@@ -78,6 +81,7 @@ namespace Game_Uss
                     break;
                 case 2:
                     snake.currentColor = ConsoleColor.Green;
+          
                     break;
                 case 3:
                     snake.currentColor = ConsoleColor.Red;

@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game_Uss.Game_Uss;
 
 namespace Game_Uss
 {
@@ -20,31 +21,20 @@ namespace Game_Uss
 
             Walls walls = new Walls(mapWidth, mapHeight);
 
-            //Point p1 = new Point(1, 3, '*');
-            //p1.Draw();
-            //Point p2 = new Point(4, 5, '#');
-            //p2.Draw();
-
-            // List<int> numList = new List<int>();
-            // numList.Add(0);
-            // numList.Add(1);
-            // numList.Add(2);
-
-            //int x = numList[0];
-
-            //foreach (int i in numList)
-            //{
-            //   Console.WriteLine(i);
-            // }
-
             int bal = 0; 
             Point p = new Point(4, 5, '*');
             Point p2 = new Point(1, 2, '*');
+
             
             Snake snake = new Snake(p, 4, Direction.Down);
             Levels levels = new Levels(walls, snake);
             Food createFood = new Food(80, 25, '$');
             Point food = createFood.CreateFood();
+
+            List<Barriers> barriers = new List<Barriers>();
+            barriers.Add(new Barriers(new Point(10, 0, '#'), 5, Direction.Down));  // Пример одного препятствия
+            barriers.Add(new Barriers(new Point(30, 0, '#'), 4, Direction.Down));  // Ещё одно препятствие
+            barriers.Add(new Barriers(new Point(50, 0, '#'), 6, Direction.Down));  // И третье
 
             string docPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "players.txt");
 
@@ -76,12 +66,13 @@ namespace Game_Uss
 
             walls.Draw();
             food.Draw();
+            
             snake.Draw();
             levels.DrawLevel();
             levels.DrawScore(bal);
             while (true)
             {
-                if (walls.IsHit(snake) || snake.IsHitTail())
+                if (walls.IsHit(snake) || snake.IsHitTail() || snake.HitBarriers(barriers))
                 {
                     levels.GameOver();
                     pc.UpdatePlayer(currentPlayer);
@@ -126,11 +117,27 @@ namespace Game_Uss
                     currentPlayer.BestScore++;
 
                     bal = levels.Counter(bal);
-
+         
                 }
                 else
                 {
                     snake.Move();
+                    if (levels.CurrentLevel == 1)
+                    {
+                        foreach (var barrier in barriers)
+                        {
+                            barrier.AutoMove(mapHeight);
+                            barrier.Draw();
+                        }
+                    }
+                    else
+                    {
+                        foreach (var barrier in barriers)
+                        {
+                            barrier.Clear();
+                        }
+                        barriers.Clear(); 
+                    }
                 }
 
                 Thread.Sleep(levels.Speed);
